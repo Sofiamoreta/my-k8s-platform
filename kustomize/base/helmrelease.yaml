@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: users
+  namespace: default
+spec:
+  interval: 1m
+  releaseName: users
+  chart:
+    spec:
+      chart: ./charts/users
+      sourceRef:
+        kind: GitRepository
+        name: platform-charts
+        namespace: flux-system
+  values:
+    image:
+      repository: ghcr.io/sofiamoreta/users
+      tag: latest
+    service:
+      port: 80
